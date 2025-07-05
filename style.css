@@ -1,3 +1,11 @@
+/* INDEX
+  1. GENERAL STYLES
+  2. UTILITY
+  3. LAYOUT
+  4. COMPONENTS
+  5. JS CLASSES
+*/
+
 @font-face {
   font-family: "Red Hat Text";
   src: url("./assets/fonts/RedHatText-VariableFont_wght.ttf") format(truetype)
@@ -22,7 +30,7 @@
   --c-rose-900: hsl(14, 65%, 9%);
 }
 
-/* GENERAL */
+/* === GENERAL STYLES === */
 body {
   font-family: "Red Hat Text", sans-serif;
   margin: 0;
@@ -44,7 +52,7 @@ picture {
   height: 180px;
 }
 
-/* UTILITY */
+/* === UTILITY ====*/
 .main__title {
   color: var(--c-rose-900);
 }
@@ -55,7 +63,7 @@ picture {
   color: var(--c-red);
 }
 
-/* ICONS */
+/* ==== ICONS === */
 .icon-btn-decrease,
 .icon-btn-increase {
   path {
@@ -63,14 +71,11 @@ picture {
   }
 }
 
-/* LAYOUT */
+/* ==== LAYOUT ==== */
 .main__grid {
   display: grid;
   /* grid-template-columns: repeat(auto-fill, minmax(600px, 1fr)); */
   grid-template-columns: 2fr 1fr;
-}
-.desserts {
-  padding-inline: 1rem;
 }
 .desserts__grid {
   display: grid;
@@ -85,7 +90,14 @@ picture {
   margin-bottom: 1rem;
 }
 
-/* Components */
+/* === COMPONENTS === */
+
+/* DESSERT */
+.desserts {
+  padding-inline: 1rem;
+}
+
+/* CARD */
 .card {
   display: flex;
   flex-direction: column;
@@ -106,7 +118,6 @@ picture {
     }
   }
 }
-
 .card__btn {
   background-color: var(--c-rose-50);
   border: none;
@@ -162,9 +173,6 @@ picture {
     }
   }
 }
-
-/* CARD */
-
 .card__overlay {
   .card__dessert {
     font-size: 1.2rem;
@@ -172,7 +180,7 @@ picture {
   }
 }
 
-/*  CART */
+/* CART */
 .cart-container {
   background-color: var(--c-rose-50);
   padding: 1.4em;
@@ -185,18 +193,24 @@ picture {
   .cart__title {
     color: var(--c-red);
   }
-  .cart__img-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .cart__img-text {
-    font-weight: 600;
-  }
 }
 
-/* JS classes */
+.cart__img-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.cart__img-text {
+  font-weight: 600;
+}
+
+.list {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* ==== JS CLASSES ==== */
 .js-hidden {
   display: none;
 }
