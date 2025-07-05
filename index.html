@@ -35,14 +35,14 @@
               <span class="card__btn-text">Add to cart</span>
             </button>
             <div class="card__btn card__btn--active js-hidden" id="btn__changeAmount">
-              <button class="card__btn-decrease btn-reset">
+              <button class="card__btn-decrease btn-reset" data-action="decrease">
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="2" viewBox="0 0 10 2"
                   class="icon-btn-decrease">
                   <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
                 </svg>
               </button>
               <span class="card__amount">1</span>
-              <button class="card__btn-increase btn-reset">
+              <button class="card__btn-increase btn-reset" data-action="increase">
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"
                   class="icon-btn-increase">
                   <path fill="#fff" d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z" />
@@ -137,6 +137,8 @@
           </section>
         </article>
       </section>
+
+
       <section class="cart-container">
         <article class="cart">
           <h2 class="cart__title">Your cart (<span class="cart__total-products">0</span>)</h2>
