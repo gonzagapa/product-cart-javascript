@@ -1,8 +1,19 @@
-const btnAddCart = document.querySelector('.card__btn');
-const btnAddCartActive = document.querySelector('.card__btn--active');
+const containerDesserts = document.getElementById("desserts__container");
 
-btnAddCart.addEventListener('click', () => {
-    console.log('Agregar al carro');
-    btnAddCart.classList.add('js-hidden');
-    btnAddCartActive.classList.remove('js-hidden');
-})
+//to manage multiple buttons events using the pattern "event delegation"
+containerDesserts.addEventListener("click", (event) => {
+    const btnContainer = event.target.closest(".card__btn-container");
+
+    if (!btnContainer) return;
+
+    toggleButtonDisplay(btnContainer);
+});
+
+function toggleButtonDisplay(btnContainer) {
+
+    const btnAddCart = btnContainer.querySelector('#btn__addCart');
+    const btnAddCartActive = btnContainer.querySelector('#btn__changeAmount');
+
+    btnAddCart.classList.toggle('js-hidden');
+    btnAddCartActive.classList.toggle('js-hidden');
+}
