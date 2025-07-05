@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="stylesheet" href="style.css">
+
+  <title>Frontend Mentor | Product list with cart</title>
+
+  <style>
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .attribution a {
+      color: hsl(228, 12.50%, 40.80%);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="main">
+    <h1 class="main__title">Desserts</h1>
+    <div class="main__grid">
+
+      <section class="desserts desserts__grid">
+        <article class="card" data-amount="0" data-index="0">
+          <picture class="card__img-container card__img-container--active">
+            <source media="(min-width:1200px )" srcset="./assets/images/image-waffle-desktop.jpg">
+            <source media="(min-width:760px )" srcset="./assets/images/image-waffle-tablet.jpg">
+            <img class="card__img" width="200" src="./assets/images/image-waffle-mobile.jpg" alt="Waffle with Berries">
+          </picture>
+          <div class="card__btn-container">
+            <button class="card__btn">
+              <div class="card__btn-icon">
+                <img class="card__btn-img" src="./assets/images/icon-add-to-cart.svg" alt="" width="24" height="24">
+              </div>
+              <span class="card__btn-text">Add to cart</span>
+            </button>
+            <div class="card__btn card__btn--active js-hidden">
+              <button class="card__btn-decrease btn-reset">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="2" viewBox="0 0 10 2"
+                  class="icon-btn-decrease">
+                  <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                </svg>
+              </button>
+              <span class="card__amount">1</span>
+              <button class="card__btn-increase btn-reset">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"
+                  class="icon-btn-increase">
+                  <path fill="#fff" d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <section class="card__overlay">
+            <p class="card__t-dessert clr-gray-light">Waffle</p>
+            <h2 class="card__dessert">Waffle with berries</h2>
+            <p class="card__price clr-oragnge">$6.50</p>
+          </section>
+        </article>
+
+        <article class="card" data-amount="0" data-index="1">
+          <picture class="card__img-container card__img-container--active">
+            <source media="(min-width:1200px )" srcset="./assets/images/image-tiramisu-desktop.jpg">
+            <source media="(min-width:760px )" srcset="./assets/images/image-tiramisu-tablet.jpg">
+            <img class="card__img" width="200" src="./assets/images/image-tiramisu-mobile.jpg" alt="tiramisu">
+          </picture>
+          <div class="card__btn-container">
+            <button class="card__btn">
+              <div class="card__btn-icon">
+                <img class="card__btn-img" src="./assets/images/icon-add-to-cart.svg" alt="" width="24" height="24">
+              </div>
+              <span class="card__btn-text">Add to cart</span>
+            </button>
+            <div class="card__btn card__btn--active js-hidden">
+              <button class="card__btn-decrease btn-reset">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="2" viewBox="0 0 10 2"
+                  class="icon-btn-decrease">
+                  <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                </svg>
+              </button>
+              <span class="card__amount">1</span>
+              <button class="card__btn-increase btn-reset">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"
+                  class="icon-btn-increase">
+                  <path fill="#fff" d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <section class="card__overlay">
+            <p class="card__t-dessert clr-gray-light">Waffle</p>
+            <h2 class="card__dessert">Waffle with berries</h2>
+            <p class="card__price clr-oragnge">$5.00</p>
+          </section>
+        </article>
+
+        <article class="card" data-amount="0" data-index="2">
+          <picture class="card__img-container card__img-container--active">
+            <source media="(min-width:1200px )" srcset="./assets/images/image-panna-cotta-desktop.jpg">
+            <source media="(min-width:760px )" srcset="./assets/images/image-panna-cotta-tablet.jpg">
+            <img class="card__img" width="200" src="./assets/images/image-panna-cotta-mobile.jpg"
+              alt="Panna with cotta">
+          </picture>
+          <div class="card__btn-container">
+            <button class="card__btn">
+              <div class="card__btn-icon">
+                <img class="card__btn-img" src="./assets/images/icon-add-to-cart.svg" alt="" width="24" height="24">
+              </div>
+              <span class="card__btn-text">Add to cart</span>
+            </button>
+            <div class="card__btn card__btn--active js-hidden">
+              <button class="card__btn-decrease btn-reset">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="2" viewBox="0 0 10 2"
+                  class="icon-btn-decrease">
+                  <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+                </svg>
+              </button>
+              <span class="card__amount">1</span>
+              <button class="card__btn-increase btn-reset">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"
+                  class="icon-btn-increase">
+                  <path fill="#fff" d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <section class="card__overlay">
+            <p class="card__t-dessert clr-gray-light">Waffle</p>
+            <h2 class="card__dessert">Waffle with berries</h2>
+            <p class="card__price clr-oragnge">$7.00</p>
+          </section>
+        </article>
+      </section>
+      <section class="cart-container">
+        <article class="cart">
+          <h2 class="cart__title">Your cart (<span class="cart__total-products">0</span>)</h2>
+          <div class="cart__img-container">
+            <img class="cart__img-empyt" src="./assets/images/illustration-empty-cart.svg" alt="illustration-empty-cart"
+              width="120px" height="120px">
+            <p class="cart__img-text clr-gray-light">Your added items will appear here</p>
+          </div>
+          <ul class="list js-hidden">
+            <li class="list__item">
+              <section class="list__item-content">
+                <div>
+                  <p class="list__product">Classic Tiramisu</p>
+                  <p class="list__price 
+                list__price--small 
+                clr-gray-light">
+                    <span class="amount-per-unit clr-oragnge">1x</span>@$5.50
+                    <span class="list__item-total">$5.50</span>
+                  </p>
+                </div>
+                <button class="btn-reset list__item-btn">
+                  <img class="btn-close" src="./assets/images/icon-remove-item.svg" alt="button to close">
+                </button>
+              </section>
+            </li>
+            <section class="list__total-section">
+              <p class="list__total-text">Order total</p>
+              <p class="list__total-price">$40.0</p>
+            </section>
+            <div class="disclaimer">
+              <p class="disclaimer__text">
+                <span class="icon-tree"></span>
+                This a <strong class="disclaimer__bold">carbon neutral</strong> delivery
+              </p>
+            </div>
+            <button class="card__btn btn--active" id="btn-confirm">Confirm Order</button>
+          </ul>
+        </article>
+      </section>
+    </div>
+    <dialog class="modal">
+      <img class="modal__icon-confirm" src="./assets/images/icon-order-confirmed.svg" alt="Icon confirmed order">
+      <h2 class="modal__title">Order Confirmed</h2>
+      <p class="clr-gray-light">We hope you enjoy your food</p>
+      <ul class="list list--bg">
+        <li class="list__item">
+          <div class="thumbnail">
+            <img class="thumbnail__img" src="./assets/images/image-baklava-thumbnail.jpg" alt="dessert thumbnail"
+              width="40px" height="40px">
+          </div>
+          <section class="list__item-content">
+            <div>
+              <p class="list__product">Classic Tiramisu</p>
+              <p class="list__price 
+              list__price--small 
+              clr-gray-light">
+                <span class="amount-per-unit clr-oragnge">1x</span>@$5.50
+              </p>
+            </div>
+            <div>
+              <p class="list__item-total list__item-total--bolder">$5.50</p>
+            </div>
+          </section>
+        </li>
+        <div class="list__total-section">
+          <p class="list__total-text">Order total</p>
+          <p class="list__total-price">$40.0</p>
+        </div>
+      </ul>
+      <button class="card__btn card__btn--active" id="btn_new-order">Start new order</button>
+    </dialog>
+  </main>
+
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
+    Coded by <a href="#">Your Name Here</a>.
+  </div>
+
+  <script src="bundle.js"></script>
+</body>
+
+</html>
