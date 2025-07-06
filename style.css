@@ -56,9 +56,6 @@ picture {
 }
 
 /* === UTILITY ====*/
-.main__title {
-  color: var(--c-rose-900);
-}
 .clr-gray-light {
   color: var(--c-rose-300);
 }
@@ -76,18 +73,49 @@ picture {
 
 /* ==== LAYOUT ==== */
 .main {
-  padding-inline: 0.5rem;
-  padding-block: 1rem;
+  padding-inline: 2rem;
+  padding-block: 3rem;
 }
-.main__grid {
-  display: grid;
-  /* grid-template-columns: repeat(auto-fill, minmax(600px, 1fr)); */
-  grid-template-columns: 2fr 1fr;
+.main__layout {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 2rem;
+
+  @media (width < 760px) {
+    flex-direction: column;
+    align-items: center;
+  }
 }
+
 .desserts__grid {
   display: grid;
   gap: 1rem;
-  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fill, 260px);
+  justify-content: space-between;
+}
+/* CART */
+.cart-container {
+  background-color: var(--c-rose-50);
+  padding: 1em;
+  border-radius: var(--b-radius-cards);
+  min-width: 200px;
+  flex: 15%;
+  justify-self: center;
+
+  .card__btn {
+    background-color: var(--c-red);
+    color: white;
+    width: 100%;
+    height: 40px;
+    margin-inline: auto;
+    margin-top: 1rem;
+
+    &:is(:hover, :focus) {
+      background-color: var(--c-rose-900);
+      outline-color: var(--c-rose-900);
+    }
+  }
 }
 .card__btn-container {
   display: flex;
@@ -108,7 +136,14 @@ picture {
 
 /* DESSERT */
 .desserts {
-  padding-inline: 1rem;
+  flex: 60%;
+}
+.desserts__title {
+  color: var(--c-rose-900);
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 0.3em;
+  grid-column: 1/-1;
 }
 
 /* CARD */
@@ -123,6 +158,8 @@ picture {
 
   .card__img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .card__overlay {
     display: grid;
@@ -191,29 +228,6 @@ picture {
   .card__dessert {
     font-size: 1.2rem;
     font-weight: 400;
-  }
-}
-
-/* CART */
-.cart-container {
-  background-color: var(--c-rose-50);
-  padding: 1em;
-  border-radius: var(--b-radius-cards);
-  min-width: 200px;
-  justify-self: center;
-
-  .card__btn {
-    background-color: var(--c-red);
-    color: white;
-    width: 100%;
-    height: 40px;
-    margin-inline: auto;
-    margin-top: 1rem;
-
-    &:is(:hover, :focus) {
-      background-color: var(--c-rose-900);
-      outline-color: var(--c-rose-900);
-    }
   }
 }
 
