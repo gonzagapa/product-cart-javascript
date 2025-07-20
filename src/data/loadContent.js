@@ -1,14 +1,12 @@
 import { currency } from "../utils/currency";
-import { getData } from "./getData";
+import { dataDesserts, getData } from "./getData";
 
-export let dataDesserts = [];
 
 window.addEventListener("DOMContentLoaded", async () => {
-    dataDesserts = await getData();
-    console.log(dataDesserts);
-    const dessertGrid = document.getElementById("desserts-grid");
-    dataDesserts.forEach(item => {
-        dessertGrid.innerHTML += `<article class="card" data-amount="0" data-index="${dataDesserts.indexOf(item)}">
+  const dessertGrid = document.getElementById("desserts-grid");
+  await getData();
+  dataDesserts.forEach(item => {
+    dessertGrid.innerHTML += `<article class="card" data-amount="0" data-index="${dataDesserts.indexOf(item)}">
             <picture class="card__img-container card__img-container--active">
               <source media="(min-width:1200px )" srcset="${item.image.desktop}">
               <source media="(min-width:760px )" srcset="${item.image.tablet}">
@@ -46,5 +44,5 @@ window.addEventListener("DOMContentLoaded", async () => {
               <p class="card__price clr-oragnge">${currency.format(item.price)}</p>
             </section>
           </article>`;
-    });
+  });
 });

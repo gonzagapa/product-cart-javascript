@@ -2,20 +2,19 @@
 
 const currency = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" });
 
+let dataDesserts = [];
+
 const getData = async () => {
     const res = await fetch("/data.json");
     const data = await res.json();
-    return data;
+    dataDesserts = data;
 };
 
-let dataDesserts = [];
-
 window.addEventListener("DOMContentLoaded", async () => {
-    dataDesserts = await getData();
-    console.log(dataDesserts);
-    const dessertGrid = document.getElementById("desserts-grid");
-    dataDesserts.forEach(item => {
-        dessertGrid.innerHTML += `<article class="card" data-amount="0" data-index="${dataDesserts.indexOf(item)}">
+  const dessertGrid = document.getElementById("desserts-grid");
+  await getData();
+  dataDesserts.forEach(item => {
+    dessertGrid.innerHTML += `<article class="card" data-amount="0" data-index="${dataDesserts.indexOf(item)}">
             <picture class="card__img-container card__img-container--active">
               <source media="(min-width:1200px )" srcset="${item.image.desktop}">
               <source media="(min-width:760px )" srcset="${item.image.tablet}">
@@ -53,10 +52,18 @@ window.addEventListener("DOMContentLoaded", async () => {
               <p class="card__price clr-oragnge">${currency.format(item.price)}</p>
             </section>
           </article>`;
-    });
+  });
 });
 
-document.getElementById("desserts__container");
+const cartContainer = document.getElementById("cart-container");
+
+const changeTotalAmountItems = (newValue) => {
+    const itemTotalAmount = cartContainer.querySelector(".cart__total-products");
+    console.log(itemTotalAmount);
+    const previousAmount = Number(itemTotalAmount.innerHTML);
+    itemTotalAmount.innerHTML = `${newValue + previousAmount}`;
+};
+
 const cartList = document.getElementById("cart-list");
 
 
@@ -124,7 +131,9 @@ function toggleButtonDisplay(btnContainer) {
 function addItemToCart(btnContainer) {
   toggleButtonDisplay(btnContainer);
   const cardElement = btnContainer.closest("article");
+
   cardElement.dataset.amount = cardElement.dataset.amount == 0 ? 1 : cardElement.dataset.amount;
+  changeTotalAmountItems(1);
 
   noItemCart.classList.add("js-hidden");
   cartListContainer.classList.remove("js-hidden");
@@ -149,9 +158,16 @@ function changeAmountItem(containerChangeAmount) {
     let numberValue = Number(cardAmountElemet.innerHTML);
     if (action === "increase") {
       numberValue += 1;
+      changeTotalAmountItems(1);
     }
     else if (action === "decrease") {
-      numberValue = numberValue !== 0 ? numberValue - 1 : 0;
+      if (numberValue !== 0) {
+        numberValue = numberValue - 1;
+        changeTotalAmountItems(-1);
+      }
+      else {
+        numberValue = 0;
+      }
     }
     cardAmountElemet.innerHTML = `${numberValue}`;
     cardElement.dataset.amount = numberValue;

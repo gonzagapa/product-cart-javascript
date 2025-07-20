@@ -1,5 +1,6 @@
-import { addItemToCartList, changeAmountInCartItem } from "../cart/cartFunctions";
-import { dataDesserts } from "../data/loadContent";
+import { changeTotalAmountItems } from "../cart/cartContainerFunctions";
+import { addItemToCartList, changeAmountInCartItem } from "../cart/cartItemFunctionsjs";
+import { dataDesserts } from "../data/getData";
 
 const containerDesserts = document.getElementById("desserts__container");
 const cartListContainer = document.getElementById("car-list-container");
@@ -35,7 +36,9 @@ function toggleButtonDisplay(btnContainer) {
 function addItemToCart(btnContainer) {
   toggleButtonDisplay(btnContainer);
   const cardElement = btnContainer.closest("article");
+
   cardElement.dataset.amount = cardElement.dataset.amount == 0 ? 1 : cardElement.dataset.amount;
+  changeTotalAmountItems(1);
 
   noItemCart.classList.add("js-hidden");
   cartListContainer.classList.remove("js-hidden");
@@ -60,9 +63,16 @@ function changeAmountItem(containerChangeAmount) {
     let numberValue = Number(cardAmountElemet.innerHTML);
     if (action === "increase") {
       numberValue += 1;
+      changeTotalAmountItems(1);
     }
     else if (action === "decrease") {
-      numberValue = numberValue !== 0 ? numberValue - 1 : 0;
+      if (numberValue !== 0) {
+        numberValue = numberValue - 1;
+        changeTotalAmountItems(-1);
+      }
+      else {
+        numberValue = 0;
+      }
     }
     cardAmountElemet.innerHTML = `${numberValue}`;
     cardElement.dataset.amount = numberValue;

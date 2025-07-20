@@ -1,7 +1,7 @@
-import { dataDesserts } from "../data/loadContent";
+
+import { dataDesserts } from "../data/getData";
 import { currency } from "../utils/currency";
 
-const containerDesserts = document.getElementById("desserts__container");
 const cartList = document.getElementById("cart-list");
 
 
