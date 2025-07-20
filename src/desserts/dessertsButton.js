@@ -1,5 +1,9 @@
-const containerDesserts = document.getElementById("desserts__container");
+import { getData } from "../data/getData";
 
+const containerDesserts = document.getElementById("desserts__container");
+const containerCart = document.getElementById("cart-container");
+const data = getData();
+console.log(data);
 //to manage multiple buttons events using the pattern "event delegation"
 containerDesserts.addEventListener("click", (event) => {
     const btnContainer = event.target.closest(".card__btn-container");

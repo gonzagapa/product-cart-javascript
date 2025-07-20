@@ -1,7 +1,15 @@
 'use strict';
 
-const containerDesserts = document.getElementById("desserts__container");
+const getData = async () => {
+    const res = await fetch("/data.json");
+    const data = await res.json();
+    return data;
+};
 
+const containerDesserts = document.getElementById("desserts__container");
+document.getElementById("cart-container");
+const data = getData();
+console.log(data);
 //to manage multiple buttons events using the pattern "event delegation"
 containerDesserts.addEventListener("click", (event) => {
     const btnContainer = event.target.closest(".card__btn-container");
