@@ -82,9 +82,38 @@ picture {
   align-items: flex-start;
   gap: 2rem;
 
-  @media (width < 760px) {
+  .desserts {
+    flex: 60%;
+  }
+
+  .cart-container {
+    min-width: 200px;
+    flex: 15%;
+    justify-self: center;
+  }
+
+  @media (width < 560px) {
     flex-direction: column;
     align-items: center;
+  }
+
+  @media (width < 800px) {
+    flex-direction: column;
+    .desserts {
+      flex: 100%;
+    }
+    .cart-container {
+      flex: 100%;
+    }
+  }
+
+  @media (950px <= width <= 1210px) {
+    .desserts {
+      flex: 50%;
+    }
+    .cart-container {
+      flex: 20%;
+    }
   }
 }
 
@@ -93,15 +122,16 @@ picture {
   gap: 1rem;
   grid-template-columns: repeat(auto-fill, 260px);
   justify-content: space-between;
+
+  @media (950px <= width <= 1210px) {
+    justify-content: center;
+  }
 }
 /* CART */
 .cart-container {
   background-color: var(--c-rose-50);
   padding: 1em;
   border-radius: var(--b-radius-cards);
-  min-width: 200px;
-  flex: 15%;
-  justify-self: center;
 
   .card__btn {
     background-color: var(--c-red);
@@ -135,15 +165,12 @@ picture {
 /* === COMPONENTS === */
 
 /* DESSERT */
-.desserts {
-  flex: 60%;
-}
+
 .desserts__title {
   color: var(--c-rose-900);
   font-weight: 700;
   font-size: 2rem;
-  margin-bottom: 0.3em;
-  grid-column: 1/-1;
+  margin-bottom: 0.8em;
 }
 
 /* CARD */
