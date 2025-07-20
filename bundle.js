@@ -1,5 +1,35 @@
 'use strict';
 
+const currency = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" });
+
+document.getElementById("car-list-container");
+document.getElementById("no-item-cart");
+const cartList = document.getElementById("cart-list");
+
+
+const addItemToCartList = ({ name, price }) => {
+    cartList.innerHTML += `<li class="list__item">
+                <section class="list__item-content">
+                  <div class="list__item-product">
+                    <p class="list__product">${name}</p>
+                    <p class="list__price list__price--small clr-gray-light">
+                      <span class="amount-per-unit clr-oragnge">1x</span>
+                      <span class="cost-per-unit">@ ${currency.format(price)}</span>
+                      <span class="list__item-total">${currency.format(price)}</span>
+                    </p>
+                  </div>
+                  <button class="btn-reset list__item-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"
+                      class="icon-remove">
+                      <path fill="#CAAFA7"
+                        d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z"
+                        class="icon-remove" />
+                    </svg>
+                  </button>
+                </section>
+              </li>`;
+};
+
 const getData = async () => {
     const res = await fetch("/data.json");
     const data = await res.json();
@@ -7,16 +37,17 @@ const getData = async () => {
 };
 
 const containerDesserts = document.getElementById("desserts__container");
-document.getElementById("cart-container");
-const currency = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" });
+const cartListContainer = document.getElementById("car-list-container");
+const noItemCart = document.getElementById("no-item-cart");
+let dataDesserts = [];
 
 //load the data.json in the index.html
 window.addEventListener("DOMContentLoaded", async () => {
-    const data = await getData();
-    console.log(data);
-    const dessertGrid = document.getElementById("desserts-grid");
-    data.forEach(item => {
-        dessertGrid.innerHTML += `<article class="card" data-amount="0" data-index="${data.indexOf(item)}">
+  dataDesserts = await getData();
+  console.log(dataDesserts);
+  const dessertGrid = document.getElementById("desserts-grid");
+  dataDesserts.forEach(item => {
+    dessertGrid.innerHTML += `<article class="card" data-amount="0" data-index="${dataDesserts.indexOf(item)}">
             <picture class="card__img-container card__img-container--active">
               <source media="(min-width:1200px )" srcset="${item.image.desktop}">
               <source media="(min-width:760px )" srcset="${item.image.tablet}">
@@ -54,61 +85,65 @@ window.addEventListener("DOMContentLoaded", async () => {
               <p class="card__price clr-oragnge">${currency.format(item.price)}</p>
             </section>
           </article>`;
-    });
-
+  });
 });
+
 //to manage multiple buttons events using the pattern "event delegation"
 containerDesserts.addEventListener("click", (event) => {
-    const btnContainer = event.target.closest(".card__btn-container");
+  const btnContainer = event.target.closest(".card__btn-container");
 
-    if (!btnContainer) return;
+  if (!btnContainer) return;
 
-    const containerChangeAmount = btnContainer.querySelector('#btn__changeAmount');
-    //we want to add the item into the cart
-    if (containerChangeAmount.classList.contains("js-hidden")) {
-        addItemToCart(btnContainer);
-    }
+  const containerChangeAmount = btnContainer.querySelector('#btn__changeAmount');
+  //we want to add the item into the cart
+  if (containerChangeAmount.classList.contains("js-hidden")) {
+    addItemToCart(btnContainer);
+  }
 
-    //we want to increase the amount of the item
-    else {
-        changeAmountItem(containerChangeAmount);
-    }
+  //we want to increase the amount of the item
+  else {
+    changeAmountItem(containerChangeAmount);
+  }
 });
 
 function toggleButtonDisplay(btnContainer) {
 
-    const btnAddCart = btnContainer.querySelector('#btn__addCart');
-    const btnAddCartActive = btnContainer.querySelector('#btn__changeAmount');
+  const btnAddCart = btnContainer.querySelector('#btn__addCart');
+  const btnAddCartActive = btnContainer.querySelector('#btn__changeAmount');
 
-    btnAddCart.classList.add('js-hidden');
-    btnAddCartActive.classList.remove('js-hidden');
+  btnAddCart.classList.add('js-hidden');
+  btnAddCartActive.classList.remove('js-hidden');
 }
 
 function addItemToCart(btnContainer) {
-    toggleButtonDisplay(btnContainer);
-
-    //todo: logic to add the item into cart-container
+  toggleButtonDisplay(btnContainer);
+  noItemCart.classList.add("js-hidden");
+  cartListContainer.classList.remove("js-hidden");
+  const dataIndex = btnContainer.closest("article").dataset.index;
+  const itemDessert = dataDesserts[dataIndex];
+  console.log(itemDessert);
+  addItemToCartList(itemDessert);
 }
 
 function changeAmountItem(containerChangeAmount) {
-    const cardAmountElemet = containerChangeAmount.querySelector(".card__amount");
+  const cardAmountElemet = containerChangeAmount.querySelector(".card__amount");
 
 
-    containerChangeAmount.addEventListener('click', (event) => {
-        event.stopPropagation(); //This prevents event to bubble and execute more times than usual
+  containerChangeAmount.addEventListener('click', (event) => {
+    event.stopPropagation(); //This prevents event to bubble and execute more times than usual
 
-        let action = event.target.closest("[data-action]")?.dataset.action;
+    let action = event.target.closest("[data-action]")?.dataset.action;
 
-        if (!action) return;
+    if (!action) return;
 
-        let numberValue = Number(cardAmountElemet.innerHTML);
-        if (action === "increase") {
-            numberValue += 1;
-        }
-        else if (action === "decrease") {
-            numberValue = numberValue !== 0 ? numberValue - 1 : 0;
-        }
-        cardAmountElemet.innerHTML = `${numberValue}`;
+    let numberValue = Number(cardAmountElemet.innerHTML);
+    if (action === "increase") {
+      numberValue += 1;
+    }
+    else if (action === "decrease") {
+      numberValue = numberValue !== 0 ? numberValue - 1 : 0;
+    }
+    cardAmountElemet.innerHTML = `${numberValue}`;
 
-    });
+  });
 }

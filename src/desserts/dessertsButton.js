@@ -1,16 +1,19 @@
+import { addItemToCartList } from "../cart/addDessertToCart";
 import { getData } from "../data/getData";
+import { currency } from "../utils/currency";
 
 const containerDesserts = document.getElementById("desserts__container");
-const containerCart = document.getElementById("cart-container");
-const currency = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" })
+const cartListContainer = document.getElementById("car-list-container");
+const noItemCart = document.getElementById("no-item-cart");
+let dataDesserts = [];
 
 //load the data.json in the index.html
 window.addEventListener("DOMContentLoaded", async () => {
-    const data = await getData();
-    console.log(data);
-    const dessertGrid = document.getElementById("desserts-grid");
-    data.forEach(item => {
-        dessertGrid.innerHTML += `<article class="card" data-amount="0" data-index="${data.indexOf(item)}">
+  dataDesserts = await getData();
+  console.log(dataDesserts);
+  const dessertGrid = document.getElementById("desserts-grid");
+  dataDesserts.forEach(item => {
+    dessertGrid.innerHTML += `<article class="card" data-amount="0" data-index="${dataDesserts.indexOf(item)}">
             <picture class="card__img-container card__img-container--active">
               <source media="(min-width:1200px )" srcset="${item.image.desktop}">
               <source media="(min-width:760px )" srcset="${item.image.tablet}">
@@ -48,61 +51,65 @@ window.addEventListener("DOMContentLoaded", async () => {
               <p class="card__price clr-oragnge">${currency.format(item.price)}</p>
             </section>
           </article>`;
-    });
+  });
+});
 
-})
 //to manage multiple buttons events using the pattern "event delegation"
 containerDesserts.addEventListener("click", (event) => {
-    const btnContainer = event.target.closest(".card__btn-container");
+  const btnContainer = event.target.closest(".card__btn-container");
 
-    if (!btnContainer) return;
+  if (!btnContainer) return;
 
-    const containerChangeAmount = btnContainer.querySelector('#btn__changeAmount')
-    //we want to add the item into the cart
-    if (containerChangeAmount.classList.contains("js-hidden")) {
-        addItemToCart(btnContainer);
-    }
+  const containerChangeAmount = btnContainer.querySelector('#btn__changeAmount')
+  //we want to add the item into the cart
+  if (containerChangeAmount.classList.contains("js-hidden")) {
+    addItemToCart(btnContainer);
+  }
 
-    //we want to increase the amount of the item
-    else {
-        changeAmountItem(containerChangeAmount);
-    }
+  //we want to increase the amount of the item
+  else {
+    changeAmountItem(containerChangeAmount);
+  }
 });
 
 function toggleButtonDisplay(btnContainer) {
 
-    const btnAddCart = btnContainer.querySelector('#btn__addCart');
-    const btnAddCartActive = btnContainer.querySelector('#btn__changeAmount');
+  const btnAddCart = btnContainer.querySelector('#btn__addCart');
+  const btnAddCartActive = btnContainer.querySelector('#btn__changeAmount');
 
-    btnAddCart.classList.add('js-hidden');
-    btnAddCartActive.classList.remove('js-hidden');
+  btnAddCart.classList.add('js-hidden');
+  btnAddCartActive.classList.remove('js-hidden');
 }
 
 function addItemToCart(btnContainer) {
-    toggleButtonDisplay(btnContainer);
-
-    //todo: logic to add the item into cart-container
+  toggleButtonDisplay(btnContainer);
+  noItemCart.classList.add("js-hidden");
+  cartListContainer.classList.remove("js-hidden");
+  const dataIndex = btnContainer.closest("article").dataset.index;
+  const itemDessert = dataDesserts[dataIndex];
+  console.log(itemDessert);
+  addItemToCartList(itemDessert);
 }
 
 function changeAmountItem(containerChangeAmount) {
-    const cardAmountElemet = containerChangeAmount.querySelector(".card__amount");
+  const cardAmountElemet = containerChangeAmount.querySelector(".card__amount");
 
 
-    containerChangeAmount.addEventListener('click', (event) => {
-        event.stopPropagation(); //This prevents event to bubble and execute more times than usual
+  containerChangeAmount.addEventListener('click', (event) => {
+    event.stopPropagation(); //This prevents event to bubble and execute more times than usual
 
-        let action = event.target.closest("[data-action]")?.dataset.action;
+    let action = event.target.closest("[data-action]")?.dataset.action;
 
-        if (!action) return;
+    if (!action) return;
 
-        let numberValue = Number(cardAmountElemet.innerHTML);
-        if (action === "increase") {
-            numberValue += 1;
-        }
-        else if (action === "decrease") {
-            numberValue = numberValue !== 0 ? numberValue - 1 : 0;
-        }
-        cardAmountElemet.innerHTML = `${numberValue}`;
+    let numberValue = Number(cardAmountElemet.innerHTML);
+    if (action === "increase") {
+      numberValue += 1;
+    }
+    else if (action === "decrease") {
+      numberValue = numberValue !== 0 ? numberValue - 1 : 0;
+    }
+    cardAmountElemet.innerHTML = `${numberValue}`;
 
-    })
+  })
 }   

@@ -142,18 +142,18 @@
           <h2 class="cart__title">Your Cart (<span class="cart__total-products">0</span>)</h2>
 
           <!-- NO ITEM IN CART -->
-          <div class="cart__img-container">
+          <div class="cart__img-container" id="no-item-cart">
             <img class="cart__img-empyt" src="./assets/images/illustration-empty-cart.svg" alt="illustration-empty-cart"
               width="120px" height="120px">
             <p class="cart__img-text clr-gray-light">Your added items will appear here</p>
           </div>
 
           <!-- CART LIST PARENT -->
-          <div class="js-hidden">
-            <ul class="list">
+          <div class="js-hidden" id="car-list-container">
+            <ul class="list" id="cart-list">
 
               <!-- CART LIST ITEM -->
-              <li class="list__item">
+              <!-- <li class="list__item">
                 <section class="list__item-content">
                   <div class="list__item-product">
                     <p class="list__product">Classic Tiramisu</p>
@@ -172,7 +172,7 @@
                     </svg>
                   </button>
                 </section>
-              </li>
+              </li> -->
 
             </ul>
 
