@@ -1,12 +1,12 @@
+import { dataDesserts } from "../data/loadContent";
 import { currency } from "../utils/currency";
 
-const cartListContainer = document.getElementById("car-list-container");
-const noItemCart = document.getElementById("no-item-cart");
+const containerDesserts = document.getElementById("desserts__container");
 const cartList = document.getElementById("cart-list");
 
 
-export const addItemToCartList = ({ name, price }) => {
-    cartList.innerHTML += `<li class="list__item">
+export const addItemToCartList = ({ name, price, index }) => {
+  cartList.innerHTML += `<li class="list__item" data-index=${index}>
                 <section class="list__item-content">
                   <div class="list__item-product">
                     <p class="list__product">${name}</p>
@@ -26,4 +26,11 @@ export const addItemToCartList = ({ name, price }) => {
                   </button>
                 </section>
               </li>`
+}
+
+export const changeAmountInCartItem = (index, newAmount) => {
+  const cartItem = cartList.querySelector(`[data-index="${index}"]`);
+  const priceItem = dataDesserts[index].price;
+  cartItem.querySelector(".amount-per-unit").innerHTML = `${newAmount}x`;
+  cartItem.querySelector(".list__item-total").innerHTML = `${currency.format(priceItem * newAmount)}`;
 }

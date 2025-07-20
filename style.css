@@ -357,3 +357,7 @@ picture {
 .js-hidden {
   display: none;
 }
+
+/* [data-index="0"] {
+  background-color: red;
+} */
