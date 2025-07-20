@@ -117,6 +117,9 @@ function toggleButtonDisplay(btnContainer) {
 
 function addItemToCart(btnContainer) {
   toggleButtonDisplay(btnContainer);
+  const cardElement = btnContainer.closest("article");
+  cardElement.dataset.amount = cardElement.dataset.amount == 0 ? 1 : cardElement.dataset.amount;
+
   noItemCart.classList.add("js-hidden");
   cartListContainer.classList.remove("js-hidden");
   const dataIndex = btnContainer.closest("article").dataset.index;
@@ -127,6 +130,7 @@ function addItemToCart(btnContainer) {
 
 function changeAmountItem(containerChangeAmount) {
   const cardAmountElemet = containerChangeAmount.querySelector(".card__amount");
+  const cardElement = containerChangeAmount.closest("article");
 
 
   containerChangeAmount.addEventListener('click', (event) => {
@@ -144,6 +148,6 @@ function changeAmountItem(containerChangeAmount) {
       numberValue = numberValue !== 0 ? numberValue - 1 : 0;
     }
     cardAmountElemet.innerHTML = `${numberValue}`;
-
+    cardElement.dataset.amount = numberValue;
   });
 }
