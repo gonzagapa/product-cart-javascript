@@ -56,19 +56,36 @@ window.addEventListener("DOMContentLoaded", async () => {
 });
 
 const cartContainer = document.getElementById("cart-container");
+const cartListContainer = document.getElementById("car-list-container");
+const noItemCart = document.getElementById("no-item-cart");
 
 const changeTotalAmountItems = (newValue) => {
     const itemTotalAmount = cartContainer.querySelector(".cart__total-products");
-    console.log(itemTotalAmount);
+
     const previousAmount = Number(itemTotalAmount.innerHTML);
     itemTotalAmount.innerHTML = `${newValue + previousAmount}`;
+
+    //If total items amounts == 0, toggleCartListContet
+    if (Number(itemTotalAmount.innerHTML) === 0) {
+        disapperCartListContent();
+    }
 };
 
-const cartList = document.getElementById("cart-list");
+const appearCartListContent = () => {
+    noItemCart.classList.add("js-hidden");
+    cartListContainer.classList.remove("js-hidden");
+};
+
+const disapperCartListContent = () => {
+    noItemCart.classList.remove("js-hidden");
+    cartListContainer.classList.add("js-hidden");
+};
+
+const cartList$1 = document.getElementById("cart-list");
 
 
 const addItemToCartList = ({ name, price, index }) => {
-  cartList.innerHTML += `<li class="list__item" data-index=${index}>
+  cartList$1.innerHTML += `<li class="list__item" data-index=${index}>
                 <section class="list__item-content">
                   <div class="list__item-product">
                     <p class="list__product">${name}</p>
@@ -78,7 +95,7 @@ const addItemToCartList = ({ name, price, index }) => {
                       <span class="list__item-total">${currency.format(price)}</span>
                     </p>
                   </div>
-                  <button class="btn-reset list__item-btn">
+                  <button class="btn-reset list__item-btn" id="delete-item-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 10 10"
                       class="icon-remove">
                       <path fill="#CAAFA7"
@@ -91,15 +108,66 @@ const addItemToCartList = ({ name, price, index }) => {
 };
 
 const changeAmountInCartItem = (index, newAmount) => {
-  const cartItem = cartList.querySelector(`[data-index="${index}"]`);
+  const cartItem = cartList$1.querySelector(`[data-index="${index}"]`);
   const priceItem = dataDesserts[index].price;
   cartItem.querySelector(".amount-per-unit").innerHTML = `${newAmount}x`;
   cartItem.querySelector(".list__item-total").innerHTML = `${currency.format(priceItem * newAmount)}`;
 };
 
+cartList$1.addEventListener("click", (event) => {
+  event.stopPropagation();
+
+  //To delete a item from cart list
+  if (event.target.closest("#delete-item-btn")) {
+    const listItemDeleted = event.target.closest(".list__item");
+    const itemDeletedIndex = listItemDeleted.dataset.index;
+
+    const itemDeletedCard = getCardItemFromIndex(itemDeletedIndex);
+
+    //remove its amount from totalAmountItems
+    const itemAmount = itemDeletedCard.dataset.amount;
+    changeTotalAmountItems(-itemAmount);
+
+    //establish data-amount to 0
+    resetAmountItem(itemDeletedIndex, 0);
+
+    //hide btn__changeAmount button
+    const btnContainer = itemDeletedCard.querySelector(".card__btn-container");
+    disapperarButtonDisplay(btnContainer);
+
+    //remove item from cart list
+    listItemDeleted.remove();
+  }
+});
+
+const resetAmountItem = (index, newAmount) => {
+  const cardItem = getCardItemFromIndex(index);
+  cardItem.dataset.amount = newAmount;
+};
+
+const getCardItemFromIndex = (index) => {
+  const cardList = [...document.querySelectorAll(".card")];
+
+  const cardItem = cardList.find(cardItem => {
+    return cardItem.dataset.index === index;
+  });
+
+  return cardItem;
+};
+
+function disapperarButtonDisplay(btnContainer) {
+  const btnAddCart = btnContainer.querySelector('#btn__addCart');
+  const btnAddCartActive = btnContainer.querySelector('#btn__changeAmount');
+
+
+  btnAddCartActive.querySelector(".card__amount").innerHTML = '1';
+  //console.log(btnAddCartActive.querySelector(".card__amount").innerHTML);
+  btnAddCart.classList.remove('js-hidden');
+  btnAddCartActive.classList.add('js-hidden');
+}
+
 const containerDesserts = document.getElementById("desserts__container");
-const cartListContainer = document.getElementById("car-list-container");
-const noItemCart = document.getElementById("no-item-cart");
+const cartList = document.getElementById("cart-list");
 
 //to manage multiple buttons events using the pattern "event delegation"
 containerDesserts.addEventListener("click", (event) => {
@@ -108,45 +176,46 @@ containerDesserts.addEventListener("click", (event) => {
   if (!btnContainer) return;
 
   const containerChangeAmount = btnContainer.querySelector('#btn__changeAmount');
+
   //we want to add the item into the cart
   if (containerChangeAmount.classList.contains("js-hidden")) {
     addItemToCart(btnContainer);
   }
-
   //we want to increase the amount of the item
   else {
-    changeAmountItem(containerChangeAmount);
+    changeAmountItem(containerChangeAmount, btnContainer);
   }
 });
 
-function toggleButtonDisplay(btnContainer) {
+function appearButtonDisplay(btnContainer) {
 
   const btnAddCart = btnContainer.querySelector('#btn__addCart');
   const btnAddCartActive = btnContainer.querySelector('#btn__changeAmount');
 
+  btnAddCartActive.querySelector(".card__amount").innerHTML = '1';
   btnAddCart.classList.add('js-hidden');
   btnAddCartActive.classList.remove('js-hidden');
 }
 
 function addItemToCart(btnContainer) {
-  toggleButtonDisplay(btnContainer);
+  appearButtonDisplay(btnContainer);
   const cardElement = btnContainer.closest("article");
 
   cardElement.dataset.amount = cardElement.dataset.amount == 0 ? 1 : cardElement.dataset.amount;
   changeTotalAmountItems(1);
 
-  noItemCart.classList.add("js-hidden");
-  cartListContainer.classList.remove("js-hidden");
+  appearCartListContent();
+
   const dataIndex = btnContainer.closest("article").dataset.index;
   const itemDessert = dataDesserts[dataIndex];
-  console.log(itemDessert);
+  //console.log(itemDessert);
   addItemToCartList({ ...itemDessert, index: dataIndex });
 }
 
-function changeAmountItem(containerChangeAmount) {
+function changeAmountItem(containerChangeAmount, btnContainer) {
   const cardAmountElemet = containerChangeAmount.querySelector(".card__amount");
   const cardElement = containerChangeAmount.closest("article");
-
+  console.log(cardElement);
 
   containerChangeAmount.addEventListener('click', (event) => {
     event.stopPropagation(); //This prevents event to bubble and execute more times than usual
@@ -165,12 +234,30 @@ function changeAmountItem(containerChangeAmount) {
         numberValue = numberValue - 1;
         changeTotalAmountItems(-1);
       }
-      else {
-        numberValue = 0;
-      }
     }
+
     cardAmountElemet.innerHTML = `${numberValue}`;
     cardElement.dataset.amount = numberValue;
+
+    // if numberValue of the card item == 0,
+    // remove from cart list and display button addToCart
+    if (numberValue === 0) {
+      disapperarButtonDisplay(btnContainer);
+      const indexArticle = cardElement.dataset.index;
+      getListItemFromIndex(indexArticle).remove();
+      return;
+    }
     changeAmountInCartItem(cardElement.dataset.index, numberValue);
+
   });
 }
+
+const getListItemFromIndex = (index) => {
+  const ListItems = [...cartList.querySelectorAll(".list__item")];
+
+  const listItem = ListItems.find(listItem => {
+    return listItem.dataset.index === index;
+  });
+
+  return listItem;
+};
