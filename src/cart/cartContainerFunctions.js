@@ -1,3 +1,4 @@
+import { currency } from "../utils/currency";
 
 
 const cartContainer = document.getElementById("cart-container");
@@ -14,6 +15,16 @@ export const changeTotalAmountItems = (newValue) => {
     if (Number(itemTotalAmount.innerHTML) === 0) {
         disapperCartListContent();
     }
+}
+
+export const changeTotalPriceItems = () => {
+    const priceElement = document.querySelector(".list__total-price");
+    //console.log({ previousTotalPrice, newValue });
+    const listTotalPricesItems = [...document.querySelectorAll('span.list__item-total')];
+    const listTotalPrices = listTotalPricesItems.map(item => Number(item.innerText.slice(1)));
+
+    priceElement.innerHTML = `${currency.format(listTotalPrices.reduce((acc, value) => acc + value, 0))}`
+
 }
 
 export const appearCartListContent = () => {

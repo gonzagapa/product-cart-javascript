@@ -71,6 +71,16 @@ const changeTotalAmountItems = (newValue) => {
     }
 };
 
+const changeTotalPriceItems = () => {
+    const priceElement = document.querySelector(".list__total-price");
+    //console.log({ previousTotalPrice, newValue });
+    const listTotalPricesItems = [...document.querySelectorAll('span.list__item-total')];
+    const listTotalPrices = listTotalPricesItems.map(item => Number(item.innerText.slice(1)));
+
+    priceElement.innerHTML = `${currency.format(listTotalPrices.reduce((acc, value) => acc + value, 0))}`;
+
+};
+
 const appearCartListContent = () => {
     noItemCart.classList.add("js-hidden");
     cartListContainer.classList.remove("js-hidden");
@@ -137,6 +147,7 @@ cartList$1.addEventListener("click", (event) => {
 
     //remove item from cart list
     listItemDeleted.remove();
+    changeTotalPriceItems();
   }
 });
 
@@ -210,12 +221,13 @@ function addItemToCart(btnContainer) {
   const itemDessert = dataDesserts[dataIndex];
   //console.log(itemDessert);
   addItemToCartList({ ...itemDessert, index: dataIndex });
+  changeTotalPriceItems();
 }
 
 function changeAmountItem(containerChangeAmount, btnContainer) {
   const cardAmountElemet = containerChangeAmount.querySelector(".card__amount");
   const cardElement = containerChangeAmount.closest("article");
-  console.log(cardElement);
+  const indexArticle = cardElement.dataset.index;
 
   containerChangeAmount.addEventListener('click', (event) => {
     event.stopPropagation(); //This prevents event to bubble and execute more times than usual
@@ -243,12 +255,16 @@ function changeAmountItem(containerChangeAmount, btnContainer) {
     // remove from cart list and display button addToCart
     if (numberValue === 0) {
       disapperarButtonDisplay(btnContainer);
-      const indexArticle = cardElement.dataset.index;
       getListItemFromIndex(indexArticle).remove();
       return;
     }
+
+    //Modified the total amount of the cart
     changeAmountInCartItem(cardElement.dataset.index, numberValue);
 
+    //Modified the total price of the purchase
+    // const totalPricePerItem = numberValue * dataDesserts[indexArticle].price;
+    changeTotalPriceItems();
   });
 }
 

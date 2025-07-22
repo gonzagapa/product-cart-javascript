@@ -1,7 +1,7 @@
 
 import { dataDesserts } from "../data/getData";
 import { currency } from "../utils/currency";
-import { changeTotalAmountItems } from "./cartContainerFunctions";
+import { changeTotalAmountItems, changeTotalPriceItems } from "./cartContainerFunctions";
 
 const cartList = document.getElementById("cart-list");
 
@@ -59,6 +59,7 @@ cartList.addEventListener("click", (event) => {
 
     //remove item from cart list
     listItemDeleted.remove();
+    changeTotalPriceItems();
   }
 });
 
