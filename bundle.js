@@ -10,6 +10,10 @@ const getData = async () => {
     dataDesserts = data;
 };
 
+const getThumbailImageById = (id = 0) => {
+    return dataDesserts[id].image.thumbnail;
+};
+
 window.addEventListener("DOMContentLoaded", async () => {
   const dessertGrid = document.getElementById("desserts-grid");
   await getData();
@@ -55,9 +59,76 @@ window.addEventListener("DOMContentLoaded", async () => {
   });
 });
 
+const resetAllperItem = async (index$1) => {
+
+    const { changeTotalAmountItems,
+        disapperarButtonDisplay,
+        getCardInfoFromIndex,
+        getCardItemFromIndex,
+        resetAmountItem, disapperCartListContent } = await Promise.resolve().then(function () { return index; });
+
+    console.log("reset...");
+    disapperCartListContent();
+
+    const { itemAmount } = getCardInfoFromIndex(index$1);
+    const btnContainer = getCardItemFromIndex(index$1).querySelector(".card__btn-container");
+    changeTotalAmountItems(-itemAmount);
+    resetAmountItem(index$1, 0);
+    disapperarButtonDisplay(btnContainer);
+};
+
+const modalElement$1 = document.getElementById('modal');
+const btnNewOrder = document.getElementById('btn_new-order');
+const listModal = document.getElementById('list-modal');
+
+
+const renderModalElements = ({ items, totalAmountPurchase }) => {
+    const totalPriceModal = document.getElementById('total-price-modal');
+
+    for (let item of items) {
+        listModal.insertAdjacentHTML('afterbegin', generateListItemTemplate(item));
+    }
+    totalPriceModal.innerText = `${totalAmountPurchase}`;
+};
+
+btnNewOrder.addEventListener('click', () => {
+    modalElement$1.close();
+    const listModalItems = [...listModal.querySelectorAll('.list__item')];
+    console.log(listModalItems);
+    listModalItems.forEach(async (item) => await resetAllperItem(item.dataset.index));
+    listModal.innerHTML = "";
+    document.getElementById("cart-list").innerHTML = '';
+});
+
+const generateListItemTemplate = ({ image, itemAmount, name, pricePerUnit, totalPrice, index }) => {
+    return `<li class="list__item" data-index='${index}'>
+          <div class="thumbnail">
+            <img class="thumbnail__img" 
+            src="${image}" 
+            alt="${name} image"
+              width="40px" height="40px">
+          </div>
+          <section class="list__item-content">
+            <div>
+              <p class="list__product">${name}</p>
+              <p class="list__price 
+              list__price--small 
+              clr-gray-light">
+                <span class="amount-per-unit clr-oragnge">${itemAmount}x</span>@${currency.format(pricePerUnit)}
+              </p>
+            </div>
+            <div>
+              <p class="list__item-total list__item-total--bolder">${currency.format(totalPrice)}</p>
+            </div>
+          </section>
+        </li>`;
+};
+
 const cartContainer = document.getElementById("cart-container");
 const cartListContainer = document.getElementById("car-list-container");
 const noItemCart = document.getElementById("no-item-cart");
+const modalElement = document.getElementById('modal');
+const btnConfirmOrder = document.getElementById('btn-confirm');
 
 const changeTotalAmountItems = (newValue) => {
     const itemTotalAmount = cartContainer.querySelector(".cart__total-products");
@@ -81,6 +152,26 @@ const changeTotalPriceItems = () => {
 
 };
 
+btnConfirmOrder.addEventListener('click', (event) => {
+    const orderDesserts = [];
+    //obtener
+    // nombre, precio por unidad, total por item, imagen,
+    const cartList = document.getElementById('cart-list');
+    const ListItems = [...cartList.querySelectorAll(".list__item")];
+
+    for (let listItem of ListItems) {
+        let indexItem = listItem.dataset.index;
+        orderDesserts.push(getCardInfoFromIndex(indexItem));
+    }
+
+    // total de la ordern
+    const totalPricePurchase = document.querySelector(".list__total-price").innerHTML;
+
+    //renderizar los elementos en el modal
+    renderModalElements({ items: orderDesserts, totalAmountPurchase: totalPricePurchase });
+    modalElement.showModal();
+});
+
 const appearCartListContent = () => {
     noItemCart.classList.add("js-hidden");
     cartListContainer.classList.remove("js-hidden");
@@ -89,6 +180,24 @@ const appearCartListContent = () => {
 const disapperCartListContent = () => {
     noItemCart.classList.remove("js-hidden");
     cartListContainer.classList.add("js-hidden");
+};
+
+const getCardInfoFromIndex = (index) => {
+    const cardList = [...document.querySelectorAll(".card")];
+    const cardItem = cardList.find(cardItem => {
+        return cardItem.dataset.index === index;
+    });
+
+    if (cardItem === null) return;
+
+    return {
+        index: index,
+        itemAmount: cardItem.dataset.amount,
+        pricePerUnit: dataDesserts[index].price,
+        totalPrice: dataDesserts[index].price * cardItem.dataset.amount,
+        name: dataDesserts[index].name,
+        image: getThumbailImageById(index)
+    }
 };
 
 const cartList$1 = document.getElementById("cart-list");
@@ -278,14 +387,16 @@ const getListItemFromIndex = (index) => {
   return listItem;
 };
 
-const modalElement = document.getElementById('modal');
-const btnConfirmOrder = document.getElementById('btn-confirm');
-const btnNewOrder = document.getElementById('btn_new-order');
-
-btnConfirmOrder.addEventListener('click', (event) => {
-    modalElement.showModal();
-});
-
-btnNewOrder.addEventListener('click', () => {
-    modalElement.close();
+var index = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    addItemToCartList: addItemToCartList,
+    appearCartListContent: appearCartListContent,
+    changeAmountInCartItem: changeAmountInCartItem,
+    changeTotalAmountItems: changeTotalAmountItems,
+    changeTotalPriceItems: changeTotalPriceItems,
+    disapperCartListContent: disapperCartListContent,
+    disapperarButtonDisplay: disapperarButtonDisplay,
+    getCardInfoFromIndex: getCardInfoFromIndex,
+    getCardItemFromIndex: getCardItemFromIndex,
+    resetAmountItem: resetAmountItem
 });

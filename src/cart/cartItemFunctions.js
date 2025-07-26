@@ -63,12 +63,12 @@ cartList.addEventListener("click", (event) => {
   }
 });
 
-const resetAmountItem = (index, newAmount) => {
+export const resetAmountItem = (index, newAmount) => {
   const cardItem = getCardItemFromIndex(index);
   cardItem.dataset.amount = newAmount;
 }
 
-const getCardItemFromIndex = (index) => {
+export const getCardItemFromIndex = (index) => {
   const cardList = [...document.querySelectorAll(".card")];
 
   const cardItem = cardList.find(cardItem => {

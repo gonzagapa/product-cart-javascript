@@ -5,3 +5,7 @@ export const getData = async () => {
     const data = await res.json();
     dataDesserts = data;
 }
+
+export const getThumbailImageById = (id = 0) => {
+    return dataDesserts[id].image.thumbnail;
+}

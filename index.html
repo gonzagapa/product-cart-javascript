@@ -207,8 +207,8 @@
       <img class="modal__icon-confirm" src="./assets/images/icon-order-confirmed.svg" alt="Icon confirmed order">
       <h2 class="modal__title">Order Confirmed</h2>
       <p class="clr-gray-light">We hope you enjoy your food</p>
-      <ul class="list list--bg">
-        <li class="list__item">
+      <ul class="list list--bg" id="list-modal">
+        <!-- <li class="list__item">
           <div class="thumbnail">
             <img class="thumbnail__img" src="./assets/images/image-baklava-thumbnail.jpg" alt="dessert thumbnail"
               width="40px" height="40px">
@@ -226,12 +226,12 @@
               <p class="list__item-total list__item-total--bolder">$5.50</p>
             </div>
           </section>
-        </li>
-        <div class="list__total-section">
-          <p class="list__total-text">Order total</p>
-          <p class="list__total-price">$40.0</p>
-        </div>
+        </li> -->
       </ul>
+      <div class="list__total-section">
+        <p class="list__total-text">Order total</p>
+        <p class="list__total-price" id="total-price-modal">0</p>
+      </div>
       <button class="card__btn card__btn--active" id="btn_new-order">Start new order</button>
     </dialog>
   </main>
