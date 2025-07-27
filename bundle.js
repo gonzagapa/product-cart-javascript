@@ -83,32 +83,31 @@ const listModal = document.getElementById('list-modal');
 
 
 const renderModalElements = ({ items, totalAmountPurchase }) => {
-    const totalPriceModal = document.getElementById('total-price-modal');
+  const totalPriceModal = document.getElementById('total-price-modal');
 
-    for (let item of items) {
-        listModal.insertAdjacentHTML('afterbegin', generateListItemTemplate(item));
-    }
-    totalPriceModal.innerText = `${totalAmountPurchase}`;
+  for (let item of items) {
+    listModal.insertAdjacentHTML('afterbegin', generateListItemTemplate(item));
+  }
+  totalPriceModal.innerText = `${totalAmountPurchase}`;
 };
 
 btnNewOrder.addEventListener('click', () => {
-    modalElement$1.close();
-    const listModalItems = [...listModal.querySelectorAll('.list__item')];
-    console.log(listModalItems);
-    listModalItems.forEach(async (item) => await resetAllperItem(item.dataset.index));
-    listModal.innerHTML = "";
-    document.getElementById("cart-list").innerHTML = '';
+  modalElement$1.close();
+  const listModalItems = [...listModal.querySelectorAll('.list__item')];
+  console.log(listModalItems);
+  listModalItems.forEach(async (item) => await resetAllperItem(item.dataset.index));
+  listModal.innerHTML = "";
+  document.getElementById("cart-list").innerHTML = '';
 });
 
 const generateListItemTemplate = ({ image, itemAmount, name, pricePerUnit, totalPrice, index }) => {
-    return `<li class="list__item" data-index='${index}'>
+  return `<li class="list__item" data-index='${index}'>
           <div class="thumbnail">
             <img class="thumbnail__img" 
             src="${image}" 
             alt="${name} image"
-              width="40px" height="40px">
+              width="60px" height="60px">
           </div>
-          <section class="list__item-content">
             <div>
               <p class="list__product">${name}</p>
               <p class="list__price 
@@ -117,10 +116,9 @@ const generateListItemTemplate = ({ image, itemAmount, name, pricePerUnit, total
                 <span class="amount-per-unit clr-oragnge">${itemAmount}x</span>@${currency.format(pricePerUnit)}
               </p>
             </div>
-            <div>
+            <div class="list__total-content">
               <p class="list__item-total list__item-total--bolder">${currency.format(totalPrice)}</p>
             </div>
-          </section>
         </li>`;
 };
 

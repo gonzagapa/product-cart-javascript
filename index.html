@@ -204,34 +204,37 @@
 
     </div>
     <dialog class="modal" id="modal">
-      <img class="modal__icon-confirm" src="./assets/images/icon-order-confirmed.svg" alt="Icon confirmed order">
+      <img class="modal__icon-confirm" width="25" height="25" src="./assets/images/icon-order-confirmed.svg"
+        alt="Icon confirmed order">
       <h2 class="modal__title">Order Confirmed</h2>
       <p class="clr-gray-light">We hope you enjoy your food</p>
-      <ul class="list list--bg" id="list-modal">
-        <!-- <li class="list__item">
-          <div class="thumbnail">
-            <img class="thumbnail__img" src="./assets/images/image-baklava-thumbnail.jpg" alt="dessert thumbnail"
-              width="40px" height="40px">
-          </div>
-          <section class="list__item-content">
-            <div>
-              <p class="list__product">Classic Tiramisu</p>
-              <p class="list__price 
-              list__price--small 
-              clr-gray-light">
-                <span class="amount-per-unit clr-oragnge">1x</span>@$5.50
-              </p>
+      <section class="order">
+        <ul class="list list--bg" id="list-modal">
+          <!-- <li class="list__item">
+            <div class="thumbnail">
+              <img class="thumbnail__img" src="./assets/images/image-baklava-thumbnail.jpg" alt="dessert thumbnail"
+                width="40px" height="40px">
             </div>
-            <div>
-              <p class="list__item-total list__item-total--bolder">$5.50</p>
-            </div>
-          </section>
-        </li> -->
-      </ul>
-      <div class="list__total-section">
-        <p class="list__total-text">Order total</p>
-        <p class="list__total-price" id="total-price-modal">0</p>
-      </div>
+            <section class="list__item-content">
+              <div>
+                <p class="list__product">Classic Tiramisu</p>
+                <p class="list__price 
+                list__price--small 
+                clr-gray-light">
+                  <span class="amount-per-unit clr-oragnge">1x</span>@$5.50
+                </p>
+              </div>
+              <div>
+                <p class="list__item-total list__item-total--bolder">$5.50</p>
+              </div>
+            </section>
+          </li> -->
+        </ul>
+        <div class="list__total-section">
+          <p class="list__total-text">Order total</p>
+          <p class="list__total-price" id="total-price-modal">0</p>
+        </div>
+      </section>
       <button class="card__btn card__btn--active" id="btn_new-order">Start new order</button>
     </dialog>
   </main>
