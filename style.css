@@ -97,17 +97,18 @@ picture {
     align-items: center;
   }
 
-  @media (width < 50rem) {
-    flex-direction: column;
-    .desserts {
-      flex: 100%;
-    }
+  @media (width > 35rem) {
+    flex-direction: row;
+
     .cart-container {
-      flex: 100%;
+      flex: 50%;
+    }
+    .desserts {
+      flex: 50%;
     }
   }
 
-  @media (59.375rem <= width <= 75.625rem) {
+  @media (59.375rem <= width <= 1440px) {
     .desserts {
       flex: 50%;
     }
@@ -120,18 +121,24 @@ picture {
 .desserts__grid {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(auto-fill, 16.25rem);
+  grid-template-columns: repeat(auto-fill, 15rem);
   justify-content: space-between;
 
-  @media (59.375rem <= width <= 75.625rem) {
+  @media (1200px <= width <= 1250px) {
+    gap: 2rem;
     justify-content: center;
   }
 }
 /* CART */
 .cart-container {
-  background-color: var(--c-rose-50);
-  padding: 1em;
-  border-radius: var(--b-radius-cards);
+  .cart {
+    max-width: 320px;
+    width: 95%;
+    margin-inline: auto;
+    background-color: var(--c-rose-50);
+    padding: 1em;
+    border-radius: var(--b-radius-cards);
+  }
 
   .card__btn {
     background-color: var(--c-red);
