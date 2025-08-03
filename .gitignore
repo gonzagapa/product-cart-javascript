@@ -4,7 +4,6 @@
 #####################################################
 *.sketch
 *.fig
-data.json
 package-lock.json
 *.txt
 
