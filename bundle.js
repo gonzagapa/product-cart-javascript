@@ -1,6 +1,6 @@
 'use strict';
 
-const currency = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" });
+const currency = new Intl.NumberFormat(undefined, { style: "currency", currency: "MXN" });
 
 let dataDesserts = [];
 
