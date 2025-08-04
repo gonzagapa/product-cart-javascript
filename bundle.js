@@ -5,7 +5,7 @@ const currency = new Intl.NumberFormat(undefined, { style: "currency", currency:
 let dataDesserts = [];
 
 const getData = async () => {
-    const res = await fetch("/data.json");
+    const res = await fetch("./data.json");
     const data = await res.json();
     dataDesserts = data;
 };
