@@ -51,8 +51,7 @@ This screenshots were taken with [Responsively App](https://responsively.app/) *
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: [challenge solution](https://gonzagapa.github.io/product-cart-javascript/)
 
 ## My process
 
